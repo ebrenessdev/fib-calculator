@@ -14,12 +14,12 @@ class Fib extends Component {
   }
 
   async fetchValues() {
-    const values = await axios.get('/api/values/current');
+    const values = await axios.get('/express-api/values/current');
     this.setState({ values: values.data });
   }
 
   async fetchIndexes() {
-    const seenIndexes = await axios.get('/api/values/all');
+    const seenIndexes = await axios.get('/express-api/values/all');
     this.setState({
       seenIndexes: seenIndexes.data
     });
@@ -28,7 +28,7 @@ class Fib extends Component {
   handleSubmit = async event => {
     event.preventDefault();
 
-    await axios.post('/api/values', {
+    await axios.post('/express-api/values', {
       index: this.state.index
     });
     this.setState({ index: '' });
@@ -54,9 +54,9 @@ class Fib extends Component {
 
   render() {
     return (
-      <div>
+      <div className="fib-container">
         <form onSubmit={this.handleSubmit}>
-          <label>Enter your index:</label>
+          <label>Fibonacci Index: </label>
           <input
             value={this.state.index}
             onChange={event => this.setState({ index: event.target.value })}

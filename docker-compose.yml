@@ -1,0 +1,56 @@
+version: '3'
+services:
+  postgres:
+    image: 'postgres:latest' # from docker hub
+    environment:
+      - POSTGRES_PASSWORD=postgres_password
+  redis:
+    image: 'redis:latest' # from docker hub
+  nginx:
+    restart: always # we want the web server to be running all the time
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.dev
+    ports:
+      - '3050:80'
+    depends_on:
+      - api
+      - client
+  api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /usr/fib/node_modules
+      - ./server:/usr/fib
+    environment: # if the variable exists on the local machine, just specify the variable name.
+      - REDIS_HOST=redis # the name of the service above
+      - REDIS_PORT=6379
+      - PGUSER=postgres
+      - PGHOST=postgres # service name
+      - PGDATABASE=postgres
+      - PGPASSWORD=postgres_password
+      - PGPORT=5432
+    depends_on:
+      - postgres
+      - redis
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /usr/fib/node_modules
+      - ./client:/usr/fib
+    stdin_open: true # Recently, a bug was introduced with the latest Create React App version that is causing the React app to exit when starting with Docker Compose.
+  worker:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /usr/fib/node_modules
+      - ./worker:/usr/fib
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
