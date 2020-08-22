@@ -15,7 +15,7 @@ after_success: # create production version of all containers
   - docker build -t ebreness/training/fib-app:nginx ./nginx
   - docker build -t ebreness/training/fib-app:server ./server
   - docker build -t ebreness/training/fib-app:worker ./worker
-  # - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push ebreness/training/fib-app:client
   - docker push ebreness/training/fib-app:nginx
   - docker push ebreness/training/fib-app:server
