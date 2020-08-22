@@ -11,8 +11,8 @@ script: # if any script exits with an error code !== 0, the travis-ci will faile
   - docker run -e CI=true ebreness/training/fib-app:client-test npm test
 
 after_success: # create production version of all containers
-  - docker build -t ebreness/training/fib-app:client ./client
-  - docker build -t ebreness/training/fib-app:nginx ./nginx
-  - docker build -t ebreness/training/fib-app:server ./server
-  - docker build -t ebreness/training/fib-app:worker ./worker
+  - docker build -t ebreness/training_fib_app:client ./client
+  - docker build -t ebreness/training_fib_app:nginx ./nginx
+  - docker build -t ebreness/training_fib_app:server ./server
+  - docker build -t ebreness/training_fib_app:worker ./worker
   - bash docker_push

@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 docker image ls
-docker push ebreness/training/fib-app:client
-docker push ebreness/training/fib-app:nginx
-docker push ebreness/training/fib-app:server
-docker push ebreness/training/fib-app:worker
+docker push ebreness/training_fib_app:client
+docker push ebreness/training_fib_app:nginx
+docker push ebreness/training_fib_app:server
+docker push ebreness/training_fib_app:worker
