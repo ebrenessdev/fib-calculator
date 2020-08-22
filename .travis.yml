@@ -1,0 +1,22 @@
+language: generic
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t ebreness/training/fib-app:client-test -f ./client/Dockerfile.dev ./client
+
+script: # if any script exits with an error code !== 0, the travis-ci will failed
+  - docker run -e CI=true ebreness/training/fib-app:client-test npm test
+
+after_success: # create production version of all containers
+  - docker build -t ebreness/training/fib-app:client ./client
+  - docker build -t ebreness/training/fib-app:nginx ./nginx
+  - docker build -t ebreness/training/fib-app:server ./server
+  - docker build -t ebreness/training/fib-app:worker ./worker
+  # - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push ebreness/training/fib-app:client
+  - docker push ebreness/training/fib-app:nginx
+  - docker push ebreness/training/fib-app:server
+  - docker push ebreness/training/fib-app:worker
