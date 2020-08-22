@@ -1,0 +1,34 @@
+{
+    "AWSEBDockerRunVersion": 2,
+    "containerDefinitions": [
+        {
+            "name": "client",
+            "image": "ebreness/training_fib_app:client",
+            "hostname": "client",
+            "essential": false
+        },
+        {
+            "name": "server",
+            "image": "ebreness/training_fib_app:server",
+            "hostname": "express-api",
+            "essential": true
+        },
+        {
+            "name": "worker",
+            "image": "ebreness/training_fib_app:worker",
+            "essential": true
+        },
+        {
+            "name": "nginx",
+            "image": "ebreness/training_fib_app:nginx",
+            "essential": true,
+            "portMappings": [
+                {
+                    "hostPort": 80,
+                    "containerPort": 80
+                }
+            ],
+            "links": ["client", "server"]
+        }
+    ]
+}

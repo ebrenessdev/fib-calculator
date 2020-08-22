@@ -16,3 +16,4 @@ after_success: # create production version of all containers
   - docker build -t ebreness/training_fib_app:server ./server
   - docker build -t ebreness/training_fib_app:worker ./worker
   - bash docker_push
+
