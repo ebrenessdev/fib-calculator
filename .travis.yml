@@ -17,3 +17,15 @@ after_success: # create production version of all containers
   - docker build -t ebreness/training_fib_app:worker ./worker
   - bash docker_push
 
+deploy:
+  # edge: true # forcing Travis to use the v2 (experimental) version of the dpl script
+  provider: elasticbeanstalk
+  region: us-east-1
+  app: fib-calculator
+  env: fib-calculator-env
+  bucket_name: elasticbeanstalk-us-east-1-372373372435
+  bucket_path: fib-calculator
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
