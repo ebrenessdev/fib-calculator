@@ -11,7 +11,7 @@
         {
             "name": "server",
             "image": "ebreness/training_fib_app:server",
-            "hostname": "express-api",
+            "hostname": "api",
             "essential": true,
             "memory": 128
         },
