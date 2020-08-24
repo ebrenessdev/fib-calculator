@@ -18,7 +18,7 @@ after_success: # create production version of all containers
   - bash docker_push
 
 deploy:
-  # edge: true # forcing Travis to use the v2 (experimental) version of the dpl script
+  edge: true # forcing Travis to use the v2 (experimental) version of the dpl script
   provider: elasticbeanstalk
   region: us-east-1
   app: fib-calculator
